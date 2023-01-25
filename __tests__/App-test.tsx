@@ -1,14 +1,22 @@
-/**
- * @format
- */
+// ./__tests__/App-test.js
 
-import 'react-native';
 import React from 'react';
 import App from '../App';
+import {render} from '@testing-library/react-native';
 
-// Note: test renderer must be required after react-native.
-import renderer from 'react-test-renderer';
+let props;
+let component;
 
-it('renders correctly', () => {
-  renderer.create(<App />);
+function getTempComponent(props) {
+  return <App {...props} />;
+}
+
+describe('[App] render', () => {
+  props = {}; // fill test props
+  component = getTempComponent(props);
+  test('renders without crashing', () => {
+    const rendered = render(component);
+    expect(rendered).toMatchSnapshot(); //스냅샷이 기존의 스냅샷과 일치하는지
+    expect(rendered).toBeTruthy(); // 컴포넌트가 null,undefined처럼 falsy한 값을 가지진 않는지.
+  });
 });
